@@ -1,0 +1,7 @@
+app_identifier "jp.co.ebookjapan.no1app" # The bundle identifier of your app
+apple_id "ebi_mac@ebookjapan.co.jp" # Your Apple email address
+
+team_id "NR9C4MWQ3M" # Developer Portal Team ID
+
+# you can even provide different app identifiers, Apple IDs and team names per lane:
+# More information: https://docs.fastlane.tools/advanced/#appfile

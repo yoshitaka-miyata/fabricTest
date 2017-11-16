@@ -1,0 +1,125 @@
+# Customize this file, documentation can be found here:
+# https://docs.fastlane.tools/actions/
+# All available actions: https://docs.fastlane.tools/actions
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "2.64.1"
+
+default_platform :ios
+
+platform :ios do
+  before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+    # cocoapods
+    # carthage
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    scan
+  end
+
+  desc "Submit a new Beta Build to Apple TestFlight"
+  desc "This will also make sure the profile is up to date"
+  lane :beta do
+    # match(type: "appstore") # more information: https://codesigning.guide
+    gym # Build your app - more options available
+    pilot
+
+    # sh "your_script.sh"
+    # You can also use other beta testing services here (run `fastlane actions`)
+  end
+
+  desc "Deploy a new version to the App Store"
+  lane :release do
+    # match(type: "appstore")
+    # snapshot
+    gym # Build your app - more options available
+    deliver(force: true)
+    # frameit
+  end
+
+  # You can define as many lanes as you want
+
+  after_all do |lane|
+    # This block is called, only if the executed lane was successful
+
+    # slack(
+    #   message: "Successfully deployed new App Update."
+    # )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+end
+
+private_lane :import_certificates do
+
+    # キーチェーン、証明書のパスワード。CERT_PASSWORDはBitriseから環境変数で設定したほうがよい。
+    ENV["KEYCHAIN_NAME"] ="dist.p12"
+    ENV["KEYCHAIN_PASSWORD"] = "iteun2"
+    ENV['CERT_PASSWORD'] = "miyamiya2"
+
+    # キーチェーンを作成する
+     create_keychain(
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      lock_when_sleeps: true
+    )
+
+    # 証明書をimport 。リポジトリのパスを指定
+    import_certificate certificate_path: "./fastlane/certificate/AppleWWDRCA.cer"
+    import_certificate certificate_path: "./fastlane/certificate/dist.p12", certificate_password: ENV['CERT_PASSWORD']
+end
+
+lane :crashlytics do
+
+    # CI環境で実行の場合のみimport_certificatesを実行。
+    import_certificates if Helper.is_ci?
+
+    sigh(adhoc: true)
+
+    # xcodebuildの設定をしないと、ビルドエラーとなる。
+    xcodebuild_args = {
+      PROVISIONING_PROFILE: lane_context[SharedValues::SIGH_UDID],
+      PRODUCT_BUNDLE_IDENTIFIER: "xxxx.xxxx.xxxx"
+    }
+
+    xcodebuild_args = xcodebuild_args.map do |k,v|
+      "#{k.to_s.shellescape}=#{v.shellescape}"
+    end.join ' '
+
+    gym(
+        clean: true,
+        xcargs: xcodebuild_args,
+        scheme: "bitrise-test"
+    ) 
+
+    crashlytics(
+      crashlytics_path: "./Pods/Crashlytics/iOS/Crashlytics.framework",
+      api_token: "[api_token]",
+      build_secret: "[build_secret]",
+      groups: "xxxxx-group" 
+    )
+
+end
+
+
+# More information about multiple platforms in fastlane: https://docs.fastlane.tools/advanced/#control-configuration-by-lane-and-by-platform
+# All available actions: https://docs.fastlane.tools/actions
+
+# fastlane reports which actions are used. No personal data is recorded.
+# Learn more at https://docs.fastlane.tools/#metrics
