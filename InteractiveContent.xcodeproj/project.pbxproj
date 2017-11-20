@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		68FFA4261F468140008882E8 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 423E36871F45F08E00CDE38F /* art.scnassets */; };
+		8AA4666D1FC2CFC4002C9E1B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AA4666B1FC2CFC3002C9E1B /* Fabric.framework */; };
+		8AA4666E1FC2CFC4002C9E1B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AA4666C1FC2CFC4002C9E1B /* Crashlytics.framework */; };
 		C41149341F042158004669EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41149331F042158004669EA /* AppDelegate.swift */; };
 		C41149381F042158004669EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41149371F042158004669EA /* ViewController.swift */; };
 		C411493B1F042158004669EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41149391F042158004669EA /* Main.storyboard */; };
@@ -21,6 +23,8 @@
 		423E36871F45F08E00CDE38F /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		423E368A1F45F0EA00CDE38F /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SampleCode.xcconfig; sourceTree = "<group>"; };
 		52C39B431F44C2710087602D /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		8AA4666B1FC2CFC3002C9E1B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
+		8AA4666C1FC2CFC4002C9E1B /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		C41149301F042158004669EA /* InteractiveContent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteractiveContent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C41149331F042158004669EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C41149371F042158004669EA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AA4666E1FC2CFC4002C9E1B /* Crashlytics.framework in Frameworks */,
+				8AA4666D1FC2CFC4002C9E1B /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +69,15 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		8AA4666A1FC2CFA0002C9E1B /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				8AA4666C1FC2CFC4002C9E1B /* Crashlytics.framework */,
+				8AA4666B1FC2CFC3002C9E1B /* Fabric.framework */,
+			);
+			path = Framework;
+			sourceTree = "<group>";
+		};
 		C41149271F042158004669EA = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +85,7 @@
 				C41149321F042158004669EA /* Interactive Content */,
 				423E36891F45F0EA00CDE38F /* Configuration */,
 				C41149311F042158004669EA /* Products */,
+				8AA4666A1FC2CFA0002C9E1B /* Framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +119,7 @@
 				C411492C1F042158004669EA /* Sources */,
 				C411492D1F042158004669EA /* Frameworks */,
 				C411492E1F042158004669EA /* Resources */,
+				8AA466691FC2CDE0002C9E1B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -160,6 +177,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8AA466691FC2CDE0002C9E1B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 4d99705355011c19b1959846349854f63c56e7b3 a246b4f6094e66aefd0999b6b4e8c2e420a08acb9250b900f671dcecc3508df8";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C411492C1F042158004669EA /* Sources */ = {
@@ -309,6 +342,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NR9C4MWQ3M;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Interactive Content/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.co.ebookjapan.no1app;
@@ -326,6 +363,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NR9C4MWQ3M;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Interactive Content/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.co.ebookjapan.no1app;
