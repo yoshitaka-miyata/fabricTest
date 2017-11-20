@@ -157,7 +157,7 @@ extension ViewController: ARSessionObserver {
 		case .notAvailable:
 			message = "Tracking not available"
 		case .limited(.initializing):
-			message = "Initializing AR session222222!!!!!!!!"
+			message = "Initializing AR session!!!!!!!!"
 		case .limited(.excessiveMotion):
 			message = "Too much motion"
 		case .limited(.insufficientFeatures):
