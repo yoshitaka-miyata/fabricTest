@@ -155,7 +155,7 @@ extension ViewController: ARSessionObserver {
 		
 		switch camera.trackingState {
 		case .notAvailable:
-			message = "Tracking not available"
+			message = "Tracking not available Test Add!!!"
 		case .limited(.initializing):
 			message = "Initializing AR session Test!"
 		case .limited(.excessiveMotion):
