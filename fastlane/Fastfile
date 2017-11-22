@@ -27,15 +27,11 @@ platform :ios do
     scan
   end
 
-  desc "Submit a new Beta Build to Apple TestFlight"
-  desc "This will also make sure the profile is up to date"
-  lane :beta do
-    # match(type: "appstore") # more information: https://codesigning.guide
-    gym # Build your app - more options available
-    pilot
-
-    # sh "your_script.sh"
-    # You can also use other beta testing services here (run `fastlane actions`)
+  desc "ベータ版をFabric/Crashlyticsにデプロイ"
+    lane :beta do
+    gym(scheme: "InteractiveContent", use_legacy_build_api: true)
+ 
+    # Fabric / Crashlytics へのデプロイについては次の記事にて紹介します。
   end
 
   desc "Deploy a new version to the App Store"
@@ -68,7 +64,7 @@ end
 private_lane :import_certificates do
 
     # キーチェーン、証明書のパスワード。CERT_PASSWORDはBitriseから環境変数で設定したほうがよい。
-    ENV["KEYCHAIN_NAME"] ="dist.p12"
+    ENV["KEYCHAIN_NAME"] ="no1app.p12"
     ENV["KEYCHAIN_PASSWORD"] = "iteun2"
     ENV['CERT_PASSWORD'] = "miyamiya2"
 
@@ -82,7 +78,7 @@ private_lane :import_certificates do
 
     # 証明書をimport 。リポジトリのパスを指定
     import_certificate certificate_path: "./fastlane/certificate/AppleWWDRCA.cer"
-    import_certificate certificate_path: "./fastlane/certificate/dist.p12", certificate_password: ENV['CERT_PASSWORD']
+    import_certificate certificate_path: "./fastlane/certificate/no1app.p12", certificate_password: ENV['CERT_PASSWORD']
 end
 
 lane :crashlytics do
