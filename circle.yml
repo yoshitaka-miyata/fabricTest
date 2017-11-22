@@ -1,0 +1,20 @@
+xcode:
+version: 9.1
+environment:
+XCODE_SCHEME: InteractiveContent #=&gt; スキーム名
+XCODE_PROJECT: ./fabricTest/InteractiveContent.xcodeproj #=&gt; .xcodeproj ファイルへの相対パス
+GYM_CODE_SIGNING_IDENTITY: "iPhone Developer: Satoshi Murakami (TQU5452RS5)" #=&gt; コード署名に使うIDを設定(後述)
+ 
+# 後述する fastlane を利用するために bundle install を行う
+ 
+dependencies:
+override:
+- cd fabricTest &amp;&amp; bundle install
+ 
+# develop ブランチにコードがPushされた時に fastlane(後述) の beta レーンを実行
+ 
+deployment:
+develop:
+branch: develop
+commands:
+- cd InteractiveContent &amp;&amp; bundle exec fastlane beta
